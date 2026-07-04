@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact — CEK Kottarakkara</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      oklch(97% 0.006 85);
+      --surface: oklch(100% 0 0);
+      --fg:      oklch(18% 0.015 70);
+      --muted:   oklch(48% 0.01 70);
+      --border:  oklch(88% 0.008 85);
+      --accent:  oklch(48% 0.14 155);
+      --accent-dark: oklch(36% 0.12 155);
+      --accent-light: oklch(75% 0.08 145);
+      --accent-glow: oklch(48% 0.14 155 / 0.10);
+
+      --font-display: 'Figtree', 'Avenir Next', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body:    'Figtree', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+      --font-mono:    'DM Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      --radius: 14px; --radius-sm: 8px; --max-width: 1200px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--fg);
+      background: var(--bg);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-dark); }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+    @media (max-width: 768px) { .container { padding: 0 16px; } }
+
+    section { padding: 80px 0; }
+    @media (max-width: 768px) { section { padding: 56px 0; } }
+
+    .section-label { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .section-label::before { content: ''; width: 24px; height: 2px; background: currentColor; border-radius: 1px; opacity: 0.5; flex-shrink: 0; }
+    .section-title { font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 40px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 16px; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--surface);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; height: 52px; }
+    .nav-logo { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--fg); letter-spacing: -0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 2px; list-style: none; }
+    .nav-links a { font-size: 13px; font-weight: 450; color: var(--muted); padding: 6px 12px; border-radius: var(--radius-sm); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-toggle { display: none; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--fg); padding: 8px; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; position: absolute; top: 52px; left: 0; right: 0; background: var(--surface); flex-direction: column; padding: 8px 16px 16px; box-shadow: 0 1px 0 var(--border); gap: 2px; }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 10px 12px; width: 100%; }
+      .nav-toggle { display: block; }
+    }
+
+    .page-header { padding: 60px 0 40px; background: linear-gradient(180deg, var(--accent-glow) 0%, transparent 100%); }
+    .page-header h1 { font-family: var(--font-display); font-size: clamp(32px, 4vw, 48px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 12px; }
+    .page-header p { font-size: 17px; color: var(--muted); max-width: 65ch; }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .contact-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 24px;
+      margin-bottom: 20px;
+    }
+    .contact-card h3 { font-family: var(--font-display); font-size: 17px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .contact-card p { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 4px; }
+    .contact-card p strong { color: var(--fg); }
+    .contact-card .link-row { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .contact-card .link-row:last-child { border-bottom: none; }
+    .contact-card .link-row .label { min-width: 80px; font-weight: 500; color: var(--fg); }
+
+    .map-placeholder {
+      background: var(--border); border-radius: var(--radius);
+      min-height: 300px; display: flex; align-items: center;
+      justify-content: center; color: var(--muted); font-size: 15px;
+    }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 14px; font-weight: 500;
+      margin-bottom: 6px; color: var(--fg);
+    }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 12px 16px;
+      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      font-family: var(--font-body); font-size: 15px;
+      background: var(--surface); color: var(--fg);
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none; border-color: var(--accent);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    footer { background: var(--fg); color: rgba(255,255,255,0.8); padding: 60px 0 32px; }
+    footer .container { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
+    footer h4 { font-family: var(--font-display); font-size: 14px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; color: #fff; margin-bottom: 16px; }
+    footer p, footer a { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.65); }
+    footer a:hover { color: var(--accent-light); }
+    footer .col p { margin-bottom: 6px; }
+    footer .col ul { list-style: none; }
+    footer .col ul li { margin-bottom: 8px; }
+    footer .col ul a { font-size: 14px; }
+    .footer-bottom { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; margin-top: 16px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: rgba(255,255,255,0.5); }
+    @media (max-width: 768px) { footer .container { grid-template-columns: 1fr 1fr; gap: 32px; } .footer-bottom { flex-direction: column; gap: 8px; text-align: center; } }
+    @media (max-width: 480px) { footer .container { grid-template-columns: 1fr; } }
+
+    .footer-wave {
+      width: 100%;
+      height: 72px;
+      overflow: hidden;
+      line-height: 0;
+      background: var(--fg);
+    }
+    .footer-wave svg { display: block; width: 100%; height: 100%; }
+
+    .img-placeholder {
+      background: linear-gradient(135deg, var(--accent-glow) 0%, var(--border) 100%);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 14px;
+      min-height: 200px;
+      text-align: center;
+      transition: all 0.25s;
+      overflow: hidden;
+    }
+    .img-placeholder .icon {
+      font-size: 36px;
+      margin-bottom: 8px;
+      opacity: 0.6;
+    }
+    .img-placeholder .hint {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+    .img-placeholder .sub-hint {
+      font-size: 11px;
+      color: var(--muted);
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+    .img-placeholder:hover {
+      border-color: var(--accent);
+      border-style: solid;
+      background: linear-gradient(135deg, var(--accent-glow) 0%, transparent 100%);
+    }
+
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="index.html" class="nav-logo">CEK</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">≡</button>
+    <ul class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="academics.html">Academics</a>
+      <a href="admissions.html">Admissions</a>
+      <a href="placements.html">Placements</a>
+      <a href="student-life.html">Student Life</a>
+      <a href="contact.html" class="active">Contact</a>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-header">
+  <div class="container">
+    <p class="section-label">Contact</p>
+    <h1>Get in Touch</h1>
+    <p>We'd love to hear from you. Reach out to us for admissions, queries, or any information about CEK.</p>
+  </div>
+</section>
+
+<section style="padding:0;border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div class="img-placeholder" style="min-height:280px;border-radius:0;border-left:none;border-right:none">
+      <span class="icon">📍</span>
+      <span class="hint">College Building</span>
+      <span class="sub-hint">Add a photo of the college building or entrance for visitors</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <div class="contact-card">
+          <h3>📍 Address</h3>
+          <p><strong>College of Engineering Kottarakkara</strong></p>
+          <p>Thrikkannamangal, ETC P.O</p>
+          <p>Kottarakkara, Kollam</p>
+          <p>Kerala — 691531</p>
+        </div>
+
+        <div class="contact-card">
+          <h3>📞 Phone</h3>
+          <p><strong>Office:</strong> 0474-2453300</p>
+          <p><strong>Principal:</strong> 0474-2458764</p>
+          <p><strong>Mobile:</strong> 8547005039</p>
+          <p style="margin-top:8px;font-size:13px">Office Hours: 9:30 am – 4:30 pm</p>
+        </div>
+
+        <div class="contact-card">
+          <h3>✉️ Email</h3>
+          <p><strong>Principal:</strong> principal@cekottarakkara.ac.in</p>
+          <p><strong>General:</strong> cekottarakkara@ihrd.ac.in</p>
+          <p><strong>Alternate:</strong> cekottarakkara.ihrd@gmail.com</p>
+        </div>
+
+        <div class="contact-card">
+          <h3>🔗 Quick Links</h3>
+          <div class="link-row">
+            <span class="label">Website</span>
+            <span>cekottarakkara.ihrd.ac.in</span>
+          </div>
+          <div class="link-row">
+            <span class="label">IHRD</span>
+            <span>ihrd.ac.in</span>
+          </div>
+          <div class="link-row">
+            <span class="label">KTU</span>
+            <span>ktu.edu.in</span>
+          </div>
+          <div class="link-row">
+            <span class="label">Fee Payment</span>
+            <span>SBCollect</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="contact-card">
+          <h3>🗺️ Location</h3>
+          <div class="map-placeholder">
+            <p style="text-align:center;padding:40px">
+              College of Engineering Kottarakkara<br>
+              Thrikkannamangal, ETC P.O<br>
+              Kottarakkara, Kollam — 691531<br><br>
+              Nearest Railway: Kottarakkara (2 km)<br>
+              Nearest Airport: Thiruvananthapuram (90 km)<br>
+              Longitude: 76°45'08"E · Latitude: 8°58'09"N
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <h3>📝 Send a Message</h3>
+          <form id="contactForm" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" placeholder="What is this about?">
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" placeholder="Type your message here..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Send Message →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="footer-wave">
+  <svg viewBox="0 0 1440 72" preserveAspectRatio="none">
+    <path d="M0,36 C150,10 300,55 460,30 C620,5 780,50 940,28 C1100,6 1280,45 1440,22 L1440,72 L0,72 Z" fill="var(--accent)"/>
+    <path d="M0,52 C220,30 440,68 660,45 C880,22 1100,60 1320,40 C1380,35 1420,48 1440,42 L1440,72 L0,72 Z" fill="var(--accent-dark)" opacity="0.5"/>
+    <path d="M0,66 C300,50 600,78 900,58 C1100,46 1300,72 1440,60 L1440,72 L0,72 Z" fill="var(--accent)" opacity="0.35"/>
+  </svg>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="col">
+      <h4>College of Engineering Kottarakkara</h4>
+      <p>Thrikkannamangal, ETC P.O</p>
+      <p>Kottarakkara, Kollam</p>
+      <p>Kerala — 691531</p>
+      <p style="margin-top:12px">📞 0474-2453300, 8547005039</p>
+      <p>✉️ principal@cekottarakkara.ac.in</p>
+    </div>
+    <div class="col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="admissions.html">Admissions</a></li>
+        <li><a href="placements.html">Placements</a></li>
+        <li><a href="student-life.html">Student Life</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#">Fee Payment (SBCollect)</a></li>
+        <li><a href="#">IHRD</a></li>
+        <li><a href="#">KTU</a></li>
+        <li><a href="#">AICTE</a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <h4>Downloads</h4>
+      <ul>
+        <li><a href="#">AICTE EoA 2026–27</a></li>
+        <li><a href="#">KTU Affiliation</a></li>
+        <li><a href="#">Mandatory Disclosure</a></li>
+        <li><a href="#">Fee Notice 2026–27</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 College of Engineering Kottarakkara</span>
+      <span>Managed by IHRD, Government of Kerala</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-body); font-size: 15px; font-weight: 600;
+    padding: 12px 28px; border-radius: var(--radius); border: none;
+    cursor: pointer; transition: all 0.2s; letter-spacing: 0.01em;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-dark); color: #fff; transform: translateY(-1px); box-shadow: 0 8px 24px var(--accent-glow); }
+</style>
+
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    var btn = e.target.querySelector('button');
+    btn.textContent = '✓ Message Sent';
+    btn.style.background = 'var(--accent)';
+    setTimeout(function() {
+      btn.textContent = 'Send Message →';
+      e.target.reset();
+    }, 2000);
+  }
+
+  (function() {
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if (toggle && links) {
+      toggle.addEventListener('click', function() { links.classList.toggle('open'); });
+      document.addEventListener('click', function(e) {
+        if (!toggle.contains(e.target) && !links.contains(e.target)) links.classList.remove('open');
+      });
+    }
+  })();
+</script>
+</body>
+</html>

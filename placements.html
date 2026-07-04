@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Placements — CEK Kottarakkara</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      oklch(97% 0.006 85);
+      --surface: oklch(100% 0 0);
+      --fg:      oklch(18% 0.015 70);
+      --muted:   oklch(48% 0.01 70);
+      --border:  oklch(88% 0.008 85);
+      --accent:  oklch(48% 0.14 155);
+      --accent-dark: oklch(36% 0.12 155);
+      --accent-light: oklch(75% 0.08 145);
+      --accent-glow: oklch(48% 0.14 155 / 0.10);
+
+      --success: oklch(55% 0.14 145);
+      --warn:    oklch(65% 0.14 85);
+      --font-display: 'Figtree', 'Avenir Next', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body:    'Figtree', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+      --font-mono:    'DM Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --max-width: 1200px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--fg);
+      background: var(--bg);
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--accent-dark); }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+    @media (max-width: 768px) { .container { padding: 0 16px; } }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-body); font-size: 15px; font-weight: 600;
+      padding: 12px 28px; border-radius: var(--radius); border: none;
+      cursor: pointer; transition: all 0.2s; letter-spacing: 0.01em;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-dark); color: #fff; transform: translateY(-1px); box-shadow: 0 8px 24px var(--accent-glow); }
+    .btn-outline { background: transparent; color: var(--fg); border: 1.5px solid var(--border); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-sm { padding: 8px 18px; font-size: 13px; }
+
+    section { padding: 80px 0; }
+    @media (max-width: 768px) { section { padding: 56px 0; } }
+
+    .section-label {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::before {
+      content: ''; width: 24px; height: 2px;
+      background: currentColor; border-radius: 1px; opacity: 0.5;
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 40px); font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 16px;
+    }
+    .section-sub { font-size: 17px; color: var(--muted); max-width: 65ch; line-height: 1.6; }
+
+    /* Navigation */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--surface);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    nav .container {
+      display: flex; align-items: center; justify-content: space-between; height: 52px;
+    }
+    .nav-logo {
+      font-family: var(--font-display); font-size: 16px; font-weight: 600;
+      color: var(--fg); letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 2px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px; font-weight: 450; color: var(--muted);
+      padding: 6px 12px; border-radius: var(--radius-sm); transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-toggle { display: none; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--fg); padding: 8px; }
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none; position: absolute; top: 52px; left: 0; right: 0;
+        background: var(--surface);
+        flex-direction: column; padding: 8px 16px 16px;
+        box-shadow: 0 1px 0 var(--border); gap: 2px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 10px 12px; width: 100%; }
+      .nav-toggle { display: block; }
+    }
+
+    /* Hero — placements specific */
+    .placement-hero {
+      padding: 100px 0 80px;
+      background: linear-gradient(135deg, var(--accent-glow) 0%, transparent 50%, var(--accent-glow) 100%);
+      position: relative; overflow: hidden;
+    }
+    .placement-hero::before {
+      content: ''; position: absolute; top: -50%; right: -15%;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .placement-hero .container { position: relative; }
+    .placement-hero h1 {
+      font-family: var(--font-display); font-size: clamp(36px, 5vw, 52px); font-weight: 700;
+      letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 16px;
+    }
+    .placement-hero h1 .highlight { color: var(--accent); }
+    .placement-hero > .container > p {
+      font-size: 17px; color: var(--muted); max-width: 60ch; line-height: 1.65; margin-bottom: 40px;
+    }
+    .placement-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .placement-stat {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px; text-align: center;
+    }
+    .placement-stat .num {
+      font-family: var(--font-display); font-size: 32px; font-weight: 700;
+      letter-spacing: -0.02em; color: var(--accent); line-height: 1; margin-bottom: 4px;
+    }
+    .placement-stat .label { font-size: 13px; color: var(--muted); letter-spacing: 0.01em; }
+    @media (max-width: 768px) {
+      .placement-hero { padding: 60px 0 48px; }
+      .placement-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .placement-stats { grid-template-columns: 1fr; }
+    }
+
+    /* Filters */
+    .filters-bar {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px 24px; margin-bottom: 32px;
+      display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+    }
+    .filters-bar .search-wrap {
+      flex: 1; position: relative; min-width: 200px;
+    }
+    .filters-bar .search-wrap input {
+      width: 100%; padding: 10px 16px 10px 40px;
+      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      font-family: var(--font-body); font-size: 14px; color: var(--fg);
+      background: var(--bg); outline: none; transition: border-color 0.2s;
+    }
+    .filters-bar .search-wrap input:focus { border-color: var(--accent); }
+    .filters-bar .search-wrap .icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 15px; color: var(--muted); pointer-events: none;
+    }
+    .filter-group {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .filter-chip {
+      padding: 8px 16px; border-radius: 999px; border: 1.5px solid var(--border);
+      background: transparent; font-family: var(--font-body); font-size: 13px;
+      font-weight: 500; color: var(--muted); cursor: pointer;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .filter-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .filter-chip.department { font-size: 12px; }
+    @media (max-width: 600px) {
+      .filters-bar { flex-direction: column; align-items: stretch; }
+      .filters-bar .search-wrap { min-width: auto; }
+    }
+
+    /* Results meta */
+    .results-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; font-size: 14px; color: var(--muted);
+    }
+    .results-meta strong { color: var(--fg); font-weight: 600; }
+
+    /* Job cards */
+    .jobs-grid {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .job-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px 28px;
+      transition: all 0.25s; cursor: pointer; position: relative;
+    }
+    .job-card:hover {
+      border-color: var(--accent); box-shadow: 0 4px 20px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+    .job-card-header {
+      display: flex; align-items: flex-start; gap: 16px; margin-bottom: 12px;
+    }
+    .job-card-header .logo-placeholder {
+      width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 18px; font-weight: 700;
+      color: #fff; letter-spacing: -0.01em;
+    }
+    .job-card-header .info { flex: 1; }
+    .job-card-header .info h3 {
+      font-family: var(--font-display); font-size: 18px; font-weight: 600;
+      letter-spacing: -0.01em; margin-bottom: 2px;
+    }
+    .job-card-header .info .company {
+      font-size: 14px; color: var(--accent); font-weight: 500;
+    }
+    .job-card-header .deadline {
+      text-align: right; flex-shrink: 0;
+    }
+    .job-card-header .deadline .dt-label {
+      font-size: 11px; color: var(--muted); letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .job-card-header .deadline .dt-value {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+    }
+    .job-card-header .deadline .dt-value.urgent { color: var(--warn); }
+
+    .job-tags {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;
+    }
+    .job-tag {
+      font-size: 12px; font-weight: 500; padding: 4px 10px;
+      border-radius: 6px; background: var(--accent-glow); color: var(--accent-dark);
+    }
+    .job-tag.location { background: oklch(93% 0.006 85); color: var(--muted); }
+
+    .job-card p {
+      font-size: 14px; color: var(--muted); line-height: 1.6;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden; margin-bottom: 12px;
+    }
+    .job-card-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 12px; border-top: 1px solid var(--border);
+    }
+    .job-card-footer .salary {
+      font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--success);
+    }
+    .job-card-footer .salary span { color: var(--muted); font-family: var(--font-body); font-weight: 400; font-size: 13px; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center; padding: 60px 20px; color: var(--muted);
+    }
+    .empty-state .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.4; }
+    .empty-state h3 { font-family: var(--font-display); font-size: 20px; color: var(--fg); margin-bottom: 8px; }
+    .empty-state p { font-size: 14px; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center; padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface); border-radius: var(--radius);
+      max-width: 640px; width: 100%; max-height: 90vh; overflow-y: auto;
+      padding: 36px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px;
+      background: none; border: none; font-size: 22px; color: var(--muted);
+      cursor: pointer; width: 36px; height: 36px; border-radius: 50%;
+      display: grid; place-items: center; transition: all 0.15s;
+    }
+    .modal-close:hover { background: var(--accent-glow); color: var(--fg); }
+    .modal h2 {
+      font-family: var(--font-display); font-size: 24px; font-weight: 700;
+      letter-spacing: -0.02em; margin-bottom: 4px;
+    }
+    .modal .company-name {
+      font-size: 15px; color: var(--accent); font-weight: 500; margin-bottom: 20px;
+    }
+    .modal .detail-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;
+    }
+    .modal .detail-item {
+      background: var(--bg); border-radius: var(--radius-sm); padding: 14px 16px;
+    }
+    .modal .detail-item .label {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.04em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
+    }
+    .modal .detail-item .value {
+      font-size: 15px; font-weight: 600; color: var(--fg);
+    }
+    .modal .detail-item .value.mono { font-family: var(--font-mono); font-weight: 500; }
+    .modal .description {
+      font-size: 15px; line-height: 1.7; color: var(--muted); margin-bottom: 24px;
+    }
+    .modal .apply-form { border-top: 1px solid var(--border); padding-top: 24px; }
+    .modal .apply-form h3 {
+      font-family: var(--font-display); font-size: 17px; font-weight: 600; margin-bottom: 16px;
+    }
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block; font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--fg);
+    }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 10px 14px; border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm); font-family: var(--font-body);
+      font-size: 14px; color: var(--fg); background: var(--bg); outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-actions { display: flex; gap: 12px; margin-top: 8px; }
+    @media (max-width: 600px) {
+      .modal { padding: 24px 20px; }
+      .modal .detail-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px; z-index: 300;
+      background: var(--fg); color: #fff; padding: 14px 24px;
+      border-radius: var(--radius-sm); font-size: 14px; font-weight: 500;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      transform: translateY(20px); opacity: 0;
+      transition: all 0.3s ease; pointer-events: none;
+    }
+    .toast.visible { transform: translateY(0); opacity: 1; }
+
+    /* Footer */
+    footer {
+      background: var(--fg); color: rgba(255,255,255,0.8);
+      padding: 60px 0 32px;
+    }
+    footer .container {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+    }
+    footer h4 {
+      font-family: var(--font-display); font-size: 14px; font-weight: 600;
+      letter-spacing: 0.02em; text-transform: uppercase; color: #fff; margin-bottom: 16px;
+    }
+    footer p, footer a { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.65); }
+    footer a:hover { color: var(--accent-light); }
+    footer .col p { margin-bottom: 6px; }
+    footer .col ul { list-style: none; }
+    footer .col ul li { margin-bottom: 8px; }
+    footer .col ul a { font-size: 14px; }
+    .footer-bottom {
+      grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 24px; margin-top: 16px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 13px; color: rgba(255,255,255,0.5);
+    }
+    @media (max-width: 768px) {
+      footer .container { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    }
+    @media (max-width: 480px) { footer .container { grid-template-columns: 1fr; } }
+
+    .footer-wave {
+      width: 100%;
+      height: 72px;
+      overflow: hidden;
+      line-height: 0;
+      background: var(--fg);
+    }
+    .footer-wave svg { display: block; width: 100%; height: 100%; }
+
+    .img-placeholder {
+      background: linear-gradient(135deg, var(--accent-glow) 0%, var(--border) 100%);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 14px;
+      min-height: 200px;
+      text-align: center;
+      transition: all 0.25s;
+      overflow: hidden;
+    }
+    .img-placeholder .icon {
+      font-size: 36px;
+      margin-bottom: 8px;
+      opacity: 0.6;
+    }
+    .img-placeholder .hint {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+    .img-placeholder .sub-hint {
+      font-size: 11px;
+      color: var(--muted);
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+    .img-placeholder:hover {
+      border-color: var(--accent);
+      border-style: solid;
+      background: linear-gradient(135deg, var(--accent-glow) 0%, transparent 100%);
+    }
+    .tpc-img-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .tpc-img-row .img-placeholder {
+      min-height: 200px;
+    }
+    @media (max-width: 600px) {
+      .tpc-img-row { grid-template-columns: 1fr; }
+    }
+
+    /* Scroll animation */
+    .fade-in {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* Page header */
+    .page-header {
+      background: var(--accent-glow); padding: 40px 0; border-bottom: 1px solid var(--border);
+    }
+    .page-header .breadcrumb {
+      font-size: 13px; color: var(--muted); margin-bottom: 8px;
+    }
+    .page-header .breadcrumb a { color: var(--muted); }
+    .page-header .breadcrumb a:hover { color: var(--accent); }
+    .page-header .breadcrumb .sep { margin: 0 8px; }
+    .page-header h1 {
+      font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 700; letter-spacing: -0.02em; line-height: 1.15;
+    }
+
+    /* Company logos — brand colors */
+    .logo-tcs { background: linear-gradient(135deg, #0079C1, #004C8C); }
+    .logo-infy { background: linear-gradient(135deg, #007CC3, #005A8C); }
+    .logo-wipro { background: linear-gradient(135deg, #9C27B0, #6A1B9A); }
+    .logo-ust { background: linear-gradient(135deg, #E65100, #BF360C); }
+    .logo-cogni { background: linear-gradient(135deg, #00897B, #00695C); }
+    .logo-tcs2 { background: linear-gradient(135deg, #283593, #1A237E); }
+    .logo-mphasis { background: linear-gradient(135deg, #C62828, #B71C1C); }
+    .logo-ericsson { background: linear-gradient(135deg, #00265B, #001A3E); }
+    .logo-byju { background: linear-gradient(135deg, #E91E63, #C2185B); }
+    .logo-amazon { background: linear-gradient(135deg, #FF9900, #CC7A00); }
+    .logo-accenture { background: linear-gradient(135deg, #A100FF, #7A00CC); }
+    .logo-zoho { background: linear-gradient(135deg, #E65100, #F97316); }
+    .logo-techm { background: linear-gradient(135deg, #1A237E, #283593); }
+    .logo-ibm { background: linear-gradient(135deg, #0062FF, #0043B3); }
+    .logo-dell { background: linear-gradient(135deg, #007DB8, #005A85); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="index.html" class="nav-logo">CEK</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">≡</button>
+    <ul class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="academics.html">Academics</a>
+      <a href="admissions.html">Admissions</a>
+      <a href="placements.html" class="active">Placements</a>
+      <a href="student-life.html">Student Life</a>
+      <a href="contact.html">Contact</a>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a><span class="sep">/</span><span>Placements</span>
+    </div>
+    <h1>Training & Placements</h1>
+  </div>
+</div>
+
+<section class="placement-hero">
+  <div class="container">
+    <h1>Building Careers at <span class="highlight">CEK</span></h1>
+    <p>Our Training & Placement Cell (TPC) works year-round to prepare students for rewarding careers. From aptitude training and mock interviews to industry partnerships — we ensure every student is placement-ready.</p>
+    <div class="tpc-img-row fade-in">
+      <div class="img-placeholder">
+        <span class="icon">🏢</span>
+        <span class="hint">Campus Drive</span>
+        <span class="sub-hint">Add photo from a placement drive or company visit</span>
+      </div>
+      <div class="img-placeholder">
+        <span class="icon">🎯</span>
+        <span class="hint">Training Session</span>
+        <span class="sub-hint">Add photo from aptitude training or workshop</span>
+      </div>
+    </div>
+    <div class="placement-stats fade-in" id="statsRow">
+      <div class="placement-stat">
+        <div class="num">92%</div>
+        <div class="label">Placement Rate 2025</div>
+      </div>
+      <div class="placement-stat">
+        <div class="num">45+</div>
+        <div class="label">Recruiting Partners</div>
+      </div>
+      <div class="placement-stat">
+        <div class="num">₹8.5L</div>
+        <div class="label">Highest Package 2025</div>
+      </div>
+      <div class="placement-stat">
+        <div class="num">₹4.2L</div>
+        <div class="label">Average Package 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="filters-bar" id="filtersBar">
+      <div class="search-wrap">
+        <span class="icon">⌕</span>
+        <input type="text" id="searchInput" placeholder="Search companies, roles, locations..." />
+      </div>
+      <div class="filter-group" id="deptFilters">
+        <button class="filter-chip active" data-dept="all">All</button>
+        <button class="filter-chip department" data-dept="cse">CSE</button>
+        <button class="filter-chip department" data-dept="aiml">AI & ML</button>
+        <button class="filter-chip department" data-dept="bca">BCA</button>
+        <button class="filter-chip department" data-dept="bba">BBA</button>
+        <button class="filter-chip department" data-dept="core">Core / All</button>
+      </div>
+    </div>
+
+    <div class="results-meta">
+      <span>Showing <strong id="resultCount">0</strong> opportunities</span>
+    </div>
+
+    <div class="jobs-grid" id="jobsGrid"></div>
+
+    <div class="empty-state" id="emptyState" style="display:none">
+      <div class="icon">⌕</div>
+      <h3>No matching opportunities</h3>
+      <p>Try adjusting your filters or search terms.</p>
+    </div>
+  </div>
+</section>
+
+<section style="background: var(--surface); border-top: 1px solid var(--border); padding: 60px 0;">
+  <div class="container">
+    <p class="section-label">How We Prepare</p>
+    <h2 class="section-title">Placement Process</h2>
+    <p class="section-sub" style="margin-bottom:36px">From day one, our holistic training framework ensures every student is equipped for the professional world.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;">
+        <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--accent);margin-bottom:8px">01</div>
+        <h4 style="font-family:var(--font-display);font-size:16px;font-weight:600;margin-bottom:6px">Aptitude Training</h4>
+        <p style="font-size:14px;color:var(--muted);line-height:1.6">Quantitative, logical reasoning, and verbal ability sessions integrated into the academic schedule.</p>
+      </div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;">
+        <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--accent);margin-bottom:8px">02</div>
+        <h4 style="font-family:var(--font-display);font-size:16px;font-weight:600;margin-bottom:6px">Technical Workshops</h4>
+        <p style="font-size:14px;color:var(--muted);line-height:1.6">Domain-specific training, coding bootcamps, and hands-on labs aligned with industry requirements.</p>
+      </div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;">
+        <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--accent);margin-bottom:8px">03</div>
+        <h4 style="font-family:var(--font-display);font-size:16px;font-weight:600;margin-bottom:6px">Mock Interviews</h4>
+        <p style="font-size:14px;color:var(--muted);line-height:1.6">One-on-one mock interviews with industry professionals and faculty panelists.</p>
+      </div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;">
+        <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--accent);margin-bottom:8px">04</div>
+        <h4 style="font-family:var(--font-display);font-size:16px;font-weight:600;margin-bottom:6px">Industry Connect</h4>
+        <p style="font-size:14px;color:var(--muted);line-height:1.6">Campus drives, company visits, guest lectures, and networking with alumni recruiters.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--accent-glow);border-top:1px solid var(--border);padding:60px 0;">
+  <div class="container" style="text-align:center">
+    <p class="section-label" style="text-align:center">Training & Placement Cell</p>
+    <h2 class="section-title" style="text-align:center">Have Questions?</h2>
+    <p style="font-size:16px;color:var(--muted);max-width:56ch;margin:0 auto 28px">Contact the TPC office for campus drive schedules, pre-placement training, or career guidance.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="contact.html" class="btn btn-primary">Get in Touch →</a>
+      <a href="#" class="btn btn-outline">TPC Brochure ↓</a>
+    </div>
+  </div>
+</section>
+
+<div class="footer-wave">
+  <svg viewBox="0 0 1440 72" preserveAspectRatio="none">
+    <path d="M0,36 C150,10 300,55 460,30 C620,5 780,50 940,28 C1100,6 1280,45 1440,22 L1440,72 L0,72 Z" fill="var(--accent)"/>
+    <path d="M0,52 C220,30 440,68 660,45 C880,22 1100,60 1320,40 C1380,35 1420,48 1440,42 L1440,72 L0,72 Z" fill="var(--accent-dark)" opacity="0.5"/>
+    <path d="M0,66 C300,50 600,78 900,58 C1100,46 1300,72 1440,60 L1440,72 L0,72 Z" fill="var(--accent)" opacity="0.35"/>
+  </svg>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="col">
+      <h4>College of Engineering Kottarakkara</h4>
+      <p>Thrikkannamangal, ETC P.O</p>
+      <p>Kottarakkara, Kollam</p>
+      <p>Kerala — 691531</p>
+      <p style="margin-top:12px">📞 0474-2453300, 8547005039</p>
+      <p>✉️ principal@cekottarakkara.ac.in</p>
+    </div>
+    <div class="col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="admissions.html">Admissions</a></li>
+        <li><a href="placements.html">Placements</a></li>
+        <li><a href="student-life.html">Student Life</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#">Fee Payment (SBCollect)</a></li>
+        <li><a href="#">IHRD</a></li>
+        <li><a href="#">KTU</a></li>
+        <li><a href="#">AICTE</a></li>
+        <li><a href="#">CEE Kerala</a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <h4>Downloads</h4>
+      <ul>
+        <li><a href="#">AICTE EoA 2026–27</a></li>
+        <li><a href="#">Extension of Affiliation — KTU</a></li>
+        <li><a href="#">Mandatory Disclosure</a></li>
+        <li><a href="#">Fee Notice 2026–27</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 College of Engineering Kottarakkara. All rights reserved.</span>
+      <span>Managed by IHRD, Government of Kerala</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal -->
+<div class="modal-overlay" id="jobModal">
+  <div class="modal" id="modalContent">
+    <button class="modal-close" id="modalClose">✕</button>
+    <h2 id="modalTitle">Job Title</h2>
+    <p class="company-name" id="modalCompany">Company Name</p>
+    <div class="detail-grid">
+      <div class="detail-item">
+        <div class="label">Location</div>
+        <div class="value" id="modalLocation">—</div>
+      </div>
+      <div class="detail-item">
+        <div class="label">Salary / Stipend</div>
+        <div class="value mono" id="modalSalary">—</div>
+      </div>
+      <div class="detail-item">
+        <div class="label">Department</div>
+        <div class="value" id="modalDept">—</div>
+      </div>
+      <div class="detail-item">
+        <div class="label">Deadline</div>
+        <div class="value" id="modalDeadline">—</div>
+      </div>
+    </div>
+    <div class="description" id="modalDesc">Description here.</div>
+    <div class="apply-form">
+      <h3>Apply for this position</h3>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="applyName" placeholder="Your full name" />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="applyEmail" placeholder="you@cekottarakkara.ac.in" />
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" id="applyPhone" placeholder="+91 XXXXX XXXXX" />
+      </div>
+      <div class="form-group">
+        <label>Message (optional)</label>
+        <textarea id="applyMsg" placeholder="Why are you a good fit for this role?"></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="applyBtn">Submit Application</button>
+        <button class="btn btn-outline" id="modalCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  (function() {
+    /* ─── Data ─── */
+    var jobs = [
+      { id:1, company:"Tata Consultancy Services", abbrev:"TCS", role:"Systems Engineer", location:"Thiruvananthapuram", salary:"₹7L–9L", dept:"cse", desc:"Join TCS's engineering team working on enterprise systems, cloud platforms, and digital transformation projects for global clients. Role includes software development, testing, and maintenance of enterprise applications.", deadline:"2026-07-15", logo:"tcs" },
+      { id:2, company:"Infosys", abbrev:"Infosys", role:"Digital Specialist Engineer", location:"Mysuru / Bengaluru", salary:"₹8L–12L", dept:"cse", desc:"Infosys is hiring digital specialists for their next-gen technology stack — AI/ML, cloud-native apps, and automation frameworks. Be part of India's leading IT services company.", deadline:"2026-07-20", logo:"infy" },
+      { id:3, company:"Wipro", abbrev:"Wipro", role:"Project Engineer", location:"Kochi", salary:"₹5.5L–7.5L", dept:"cse", desc:"Wipro's Project Engineer role offers exposure to full-stack development, testing, and client delivery across multiple domains. Selected candidates undergo Wipro's acclaimed Turbo training.", deadline:"2026-07-10", logo:"wipro" },
+      { id:4, company:"UST Global", abbrev:"UST", role:"Software Engineer", location:"Thiruvananthapuram", salary:"₹6L–8.5L", dept:"cse", desc:"UST Global is looking for software engineers with strong fundamentals in programming, databases, and problem-solving. Work on cutting-edge digital solutions for Fortune 500 clients.", deadline:"2026-08-05", logo:"ust" },
+      { id:5, company:"Cognizant Technology Solutions", abbrev:"CTS", role:"Programmer Analyst Trainee", location:"Kochi / Chennai", salary:"₹5L–7L", dept:"core", desc:"Cognizant's PAT program is designed for fresh graduates with strong analytical skills. Training covers full-stack, cloud, and data engineering before project deployment.", deadline:"2026-06-30", logo:"cogni" },
+      { id:6, company:"Tata Elxsi", abbrev:"Tata Elxsi", role:"Graduate Engineer Trainee", location:"Thiruvananthapuram", salary:"₹6L–8L", dept:"core", desc:"Work on embedded systems, automotive software, broadcast, and IoT solutions at Tata Elxsi's Trivandrum development centre.", deadline:"2026-07-25", logo:"tcs2" },
+      { id:7, company:"Mphasis", abbrev:"Mphasis", role:"Software Engineer", location:"Bengaluru", salary:"₹5.5L–7L", dept:"cse", desc:"Mphasis is seeking software engineers for their banking, financial services, and insurance tech teams. Strong Java or Python skills required.", deadline:"2026-08-01", logo:"mphasis" },
+      { id:8, company:"Ericsson India", abbrev:"Ericsson", role:"Network Engineer", location:"Kolkata / Noida", salary:"₹6L–8L", dept:"core", desc:"Ericsson hires fresh graduates for their managed services team — network optimisation, 5G rollout support, and telecom operations.", deadline:"2026-08-15", logo:"ericsson" },
+      { id:9, company:"Byju's (Think & Learn)", abbrev:"Byju's", role:"Business Development Associate", location:"Bengaluru", salary:"₹5L–7L + incentives", dept:"bba", desc:"Byju's is hiring BDA professionals for their sales and client engagement team — strong communication and presentation skills essential.", deadline:"2026-07-05", logo:"byju" },
+      { id:10, company:"Amazon Development Centre", abbrev:"Amazon", role:"Software Development Engineer", location:"Bengaluru / Hyderabad", salary:"₹12L–18L", dept:"cse", desc:"Amazon SDE role for top performers. Focus on distributed systems, high-scale services, and solving complex engineering problems. Strong DSA skills required.", deadline:"2026-08-20", logo:"amazon" },
+      { id:11, company:"Accenture Solutions", abbrev:"Accenture", role:"Associate Software Engineer", location:"Bengaluru / Chennai", salary:"₹5L–6.5L", dept:"core", desc:"Accenture's ASE program trains fresh graduates in emerging technologies including cloud, AI, cybersecurity, and digital platforms.", deadline:"2026-07-12", logo:"accenture" },
+      { id:12, company:"Zoho Corporation", abbrev:"Zoho", role:"Software Developer", location:"Chennai", salary:"₹6L–10L", dept:"cse", desc:"Zoho is looking for passionate developers to build SaaS products used by millions. Strong fundamentals in any programming language and good problem-solving ability.", deadline:"2026-08-10", logo:"zoho" },
+      { id:13, company:"Tech Mahindra", abbrev:"TechM", role:"Engineer Trainee", location:"Pune / Hyderabad", salary:"₹5L–6.5L", dept:"core", desc:"Tech Mahindra's Engineer Trainee program focuses on digital technologies including 5G, IoT, blockchain, and metaverse solutions.", deadline:"2026-07-18", logo:"techm" },
+      { id:14, company:"IBM India", abbrev:"IBM", role:"Associate Developer", location:"Bengaluru", salary:"₹7L–11L", dept:"cse", desc:"IBM is hiring associates for their cloud, AI, and data platform teams. Work with cutting-edge enterprise technologies and global clients.", deadline:"2026-08-25", logo:"ibm" },
+      { id:15, company:"Federal Bank", abbrev:"Federal Bank", role:"Management Trainee", location:"Kerala", salary:"₹6L–8L", dept:"bba", desc:"Federal Bank's MT programme grooms graduates for branch management, credit analysis, and banking operations. Commerce/business background preferred.", deadline:"2026-07-08", logo:"mphasis" },
+      { id:16, company:"Dell Technologies", abbrev:"Dell", role:"Software Engineer 1", location:"Bengaluru", salary:"₹8L–12L", dept:"cse", desc:"Dell's engineering team builds enterprise solutions for data management, cloud infrastructure, and AI-driven operations. C++/Java/Python skills needed.", deadline:"2026-09-01", logo:"dell" },
+      { id:17, company:"Quantiphi Analytics", abbrev:"Quantiphi", role:"Data Engineer", location:"Bengaluru / Mumbai", salary:"₹7L–10L", dept:"aiml", desc:"Quantiphi is an AI consultancy solving high-impact problems with machine learning and data engineering. Python, SQL, and basic ML knowledge required.", deadline:"2026-08-12", logo:"ibm" },
+      { id:18, company:"EY Global Delivery", abbrev:"EY GDS", role:"Associate Consultant", location:"Kochi", salary:"₹5.5L–7.5L", dept:"bba", desc:"Ernst & Young GDS is hiring associates for consulting, risk advisory, and digital transformation projects. Strong analytical and communication skills.", deadline:"2026-07-22", logo:"techm" },
+      { id:19, company:"Experion Technologies", abbrev:"Experion", role:"Associate Software Engineer", location:"Thiruvananthapuram", salary:"₹5L–7L", dept:"cse", desc:"Experion is a fast-growing product engineering company. Work on enterprise mobility, cloud apps, and digital platforms for global clients.", deadline:"2026-07-28", logo:"zoho" },
+      { id:20, company:"Nestlé India", abbrev:"Nestlé", role:"Management Trainee — Supply Chain", location:"Kerala / Tamil Nadu", salary:"₹7L–9L", dept:"bba", desc:"Nestlé's management trainee programme in supply chain and operations — ideal for BBA graduates with an interest in FMCG operations.", deadline:"2026-08-18", logo:"cogni" },
+    ];
+
+    /* ─── Render ─── */
+    var grid = document.getElementById('jobsGrid');
+    var count = document.getElementById('resultCount');
+    var empty = document.getElementById('emptyState');
+    var searchInput = document.getElementById('searchInput');
+    var deptBtns = document.querySelectorAll('[data-dept]');
+
+    var currentDept = 'all';
+    var currentSearch = '';
+    var activeJobId = null;
+
+    function getInitials(name) {
+      var parts = name.split(/[\s-]+/);
+      if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+      return name.slice(0,2).toUpperCase();
+    }
+
+    function render() {
+      var filtered = jobs.filter(function(j) {
+        var matchDept = currentDept === 'all' || j.dept === currentDept;
+        if (!matchDept) return false;
+        if (!currentSearch) return true;
+        var q = currentSearch.toLowerCase();
+        return j.company.toLowerCase().includes(q)
+            || j.abbrev.toLowerCase().includes(q)
+            || j.role.toLowerCase().includes(q)
+            || j.location.toLowerCase().includes(q)
+            || j.desc.toLowerCase().includes(q);
+      });
+
+      count.textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      grid.innerHTML = filtered.map(function(j) {
+        var d = new Date(j.deadline);
+        var daysLeft = Math.ceil((d - new Date()) / (1000*60*60*24));
+        var urgent = daysLeft <= 7;
+        var deadlineStr = d.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+
+        return '<div class="job-card" data-id="' + j.id + '">' +
+          '<div class="job-card-header">' +
+            '<div class="logo-placeholder logo-' + j.logo + '">' + getInitials(j.company) + '</div>' +
+            '<div class="info">' +
+              '<h3>' + j.role + '</h3>' +
+              '<div class="company">' + j.company + ' (' + j.abbrev + ')</div>' +
+            '</div>' +
+            '<div class="deadline">' +
+              '<div class="dt-label">Apply by</div>' +
+              '<div class="dt-value' + (urgent ? ' urgent' : '') + '">' + deadlineStr + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="job-tags">' +
+            '<span class="job-tag">' + j.role + '</span>' +
+            '<span class="job-tag location">' + j.location + '</span>' +
+          '</div>' +
+          '<p>' + j.desc + '</p>' +
+          '<div class="job-card-footer">' +
+            '<div class="salary">' + j.salary + ' <span>p.a.</span></div>' +
+            '<button class="btn btn-primary btn-sm view-btn">View & Apply</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      /* ─── Click handlers ─── */
+      grid.querySelectorAll('.job-card').forEach(function(card) {
+        card.addEventListener('click', function(e) {
+          if (e.target.closest('.view-btn')) {
+            var id = parseInt(card.dataset.id);
+            openModal(id);
+          }
+        });
+        card.querySelector('.view-btn').addEventListener('click', function(e) {
+          e.stopPropagation();
+          var id = parseInt(card.dataset.id);
+          openModal(id);
+        });
+      });
+    }
+
+    /* ─── Filters ─── */
+    searchInput.addEventListener('input', function() {
+      currentSearch = this.value;
+      render();
+    });
+
+    deptBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        deptBtns.forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        currentDept = this.dataset.dept;
+        render();
+        /* Scroll filters into view on mobile */
+        if (window.innerWidth <= 600) {
+          document.getElementById('filtersBar').scrollIntoView({ behavior:'smooth', block:'nearest' });
+        }
+      });
+    });
+
+    /* ─── Modal ─── */
+    var overlay = document.getElementById('jobModal');
+    var closeBtn = document.getElementById('modalClose');
+    var cancelBtn = document.getElementById('modalCancel');
+
+    function openModal(id) {
+      var j = jobs.find(function(x) { return x.id === id; });
+      if (!j) return;
+      activeJobId = id;
+      document.getElementById('modalTitle').textContent = j.role;
+      document.getElementById('modalCompany').textContent = j.company + ' (' + j.abbrev + ')';
+      document.getElementById('modalLocation').textContent = j.location;
+      document.getElementById('modalSalary').textContent = j.salary;
+      var deptNames = { cse:'CSE', aiml:'AI & ML', bca:'BCA', bba:'BBA', core:'Core / All' };
+      document.getElementById('modalDept').textContent = deptNames[j.dept] || j.dept;
+      var d = new Date(j.deadline);
+      document.getElementById('modalDeadline').textContent = d.toLocaleDateString('en-IN', { day:'2-digit', month:'long', year:'numeric' });
+      document.getElementById('modalDesc').textContent = j.desc;
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+      activeJobId = null;
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeModal();
+    });
+
+    /* ─── Apply ─── */
+    document.getElementById('applyBtn').addEventListener('click', function() {
+      var name = document.getElementById('applyName').value.trim();
+      var email = document.getElementById('applyEmail').value.trim();
+      var phone = document.getElementById('applyPhone').value.trim();
+      if (!name || !email || !phone) {
+        showToast('Please fill in your name, email, and phone number.');
+        return;
+      }
+      if (!email.includes('@')) {
+        showToast('Please enter a valid email address.');
+        return;
+      }
+      var j = jobs.find(function(x) { return x.id === activeJobId; });
+      showToast('Application submitted for ' + (j ? j.role : 'the position') + ' at ' + (j ? j.company : '') + ' ✓');
+      closeModal();
+      /* Reset form */
+      document.getElementById('applyName').value = '';
+      document.getElementById('applyEmail').value = '';
+      document.getElementById('applyPhone').value = '';
+      document.getElementById('applyMsg').value = '';
+    });
+
+    /* ─── Toast ─── */
+    var toastEl = document.getElementById('toast');
+    var toastTimer = null;
+
+    function showToast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function() {
+        toastEl.classList.remove('visible');
+      }, 3000);
+    }
+
+    /* ─── Fade-in on scroll ─── */
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold:0.15 });
+    document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+
+    /* ─── Nav toggle ─── */
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if (toggle && links) {
+      toggle.addEventListener('click', function() { links.classList.toggle('open'); });
+      document.addEventListener('click', function(e) {
+        if (!toggle.contains(e.target) && !links.contains(e.target)) links.classList.remove('open');
+      });
+    }
+
+    /* ─── Init ─── */
+    render();
+  })();
+</script>
+</body>
+</html>

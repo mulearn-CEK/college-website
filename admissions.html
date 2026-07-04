@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admissions — CEK Kottarakkara</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      oklch(97% 0.006 85);
+      --surface: oklch(100% 0 0);
+      --fg:      oklch(18% 0.015 70);
+      --muted:   oklch(48% 0.01 70);
+      --border:  oklch(88% 0.008 85);
+      --accent:  oklch(48% 0.14 155);
+      --accent-dark: oklch(36% 0.12 155);
+      --accent-light: oklch(75% 0.08 145);
+      --accent-glow: oklch(48% 0.14 155 / 0.10);
+
+      --font-display: 'Figtree', 'Avenir Next', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body:    'Figtree', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+      --font-mono:    'DM Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      --radius: 14px; --radius-sm: 8px; --max-width: 1200px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--fg);
+      background: var(--bg);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-dark); }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+    @media (max-width: 768px) { .container { padding: 0 16px; } }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-body); font-size: 15px; font-weight: 600;
+      padding: 12px 28px; border-radius: var(--radius); border: none;
+      cursor: pointer; transition: all 0.2s; letter-spacing: 0.01em;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-dark); color: #fff; transform: translateY(-1px); box-shadow: 0 8px 24px var(--accent-glow); }
+    .btn-outline { background: transparent; color: var(--fg); border: 1.5px solid var(--border); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    section { padding: 80px 0; }
+    @media (max-width: 768px) { section { padding: 56px 0; } }
+
+    .section-label { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .section-label::before { content: ''; width: 24px; height: 2px; background: currentColor; border-radius: 1px; opacity: 0.5; flex-shrink: 0; }
+    .section-title { font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 40px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 16px; }
+    .section-sub { font-size: 17px; color: var(--muted); max-width: 65ch; line-height: 1.6; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--surface);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; height: 52px; }
+    .nav-logo { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--fg); letter-spacing: -0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 2px; list-style: none; }
+    .nav-links a { font-size: 13px; font-weight: 450; color: var(--muted); padding: 6px 12px; border-radius: var(--radius-sm); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-toggle { display: none; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--fg); padding: 8px; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; position: absolute; top: 52px; left: 0; right: 0; background: var(--surface); flex-direction: column; padding: 8px 16px 16px; box-shadow: 0 1px 0 var(--border); gap: 2px; }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 10px 12px; width: 100%; }
+      .nav-toggle { display: block; }
+    }
+
+    .page-header { padding: 60px 0 40px; background: linear-gradient(180deg, var(--accent-glow) 0%, transparent 100%); }
+    .page-header h1 { font-family: var(--font-display); font-size: clamp(32px, 4vw, 48px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 12px; }
+    .page-header p { font-size: 17px; color: var(--muted); max-width: 65ch; }
+
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+    }
+    .step-card .num {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .step-card h4 { font-family: var(--font-display); font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .step-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    @media (max-width: 768px) { .step-grid { grid-template-columns: 1fr; } }
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+    }
+    .info-card h3 { font-family: var(--font-display); font-size: 17px; font-weight: 600; margin-bottom: 12px; }
+    .info-card p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 8px; }
+    .info-card p strong { color: var(--fg); }
+    .info-card ul { list-style: none; }
+    .info-card li {
+      font-size: 14px; color: var(--muted); padding: 8px 0;
+      border-bottom: 1px solid var(--border); line-height: 1.5;
+    }
+    .info-card li:last-child { border-bottom: none; }
+    .info-card li::before { content: '→'; color: var(--accent); margin-right: 8px; font-family: var(--font-mono); font-size: 12px; }
+
+    .doc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .doc-link {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px 24px;
+      transition: all 0.2s; color: var(--fg);
+    }
+    .doc-link:hover { border-color: var(--accent); color: var(--accent); }
+    .doc-link .icon { font-size: 24px; }
+    .doc-link .name { font-size: 14px; font-weight: 500; }
+    .doc-link .hint { font-size: 12px; color: var(--muted); }
+    @media (max-width: 600px) { .doc-grid { grid-template-columns: 1fr; } }
+
+    .cta-banner {
+      background: var(--fg); color: #fff;
+      border-radius: var(--radius); padding: 60px; text-align: center;
+    }
+    .cta-banner h2 { font-family: var(--font-display); font-size: clamp(24px, 3vw, 36px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .cta-banner p { font-size: 16px; color: rgba(255,255,255,0.7); max-width: 56ch; margin: 0 auto 28px; }
+    .cta-banner .btn-primary { background: var(--accent); color: #fff; }
+
+    footer { background: var(--fg); color: rgba(255,255,255,0.8); padding: 60px 0 32px; }
+    footer .container { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
+    footer h4 { font-family: var(--font-display); font-size: 14px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; color: #fff; margin-bottom: 16px; }
+    footer p, footer a { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.65); }
+    footer a:hover { color: var(--accent-light); }
+    footer .col p { margin-bottom: 6px; }
+    footer .col ul { list-style: none; }
+    footer .col ul li { margin-bottom: 8px; }
+    footer .col ul a { font-size: 14px; }
+    .footer-bottom { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; margin-top: 16px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: rgba(255,255,255,0.5); }
+    @media (max-width: 768px) { footer .container { grid-template-columns: 1fr 1fr; gap: 32px; } .footer-bottom { flex-direction: column; gap: 8px; text-align: center; } }
+    @media (max-width: 480px) { footer .container { grid-template-columns: 1fr; } }
+
+    .footer-wave {
+      width: 100%;
+      height: 72px;
+      overflow: hidden;
+      line-height: 0;
+      background: var(--fg);
+    }
+    .footer-wave svg { display: block; width: 100%; height: 100%; }
+
+    .img-placeholder {
+      background: linear-gradient(135deg, var(--accent-glow) 0%, var(--border) 100%);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 14px;
+      min-height: 200px;
+      text-align: center;
+      transition: all 0.25s;
+      overflow: hidden;
+    }
+    .img-placeholder .icon {
+      font-size: 36px;
+      margin-bottom: 8px;
+      opacity: 0.6;
+    }
+    .img-placeholder .hint {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+    .img-placeholder .sub-hint {
+      font-size: 11px;
+      color: var(--muted);
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+    .img-placeholder:hover {
+      border-color: var(--accent);
+      border-style: solid;
+      background: linear-gradient(135deg, var(--accent-glow) 0%, transparent 100%);
+    }
+
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="index.html" class="nav-logo">CEK</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">≡</button>
+    <ul class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="academics.html">Academics</a>
+      <a href="admissions.html" class="active">Admissions</a>
+      <a href="placements.html">Placements</a>
+      <a href="student-life.html">Student Life</a>
+      <a href="contact.html">Contact</a>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-header">
+  <div class="container">
+    <p class="section-label">Admissions</p>
+    <h1>Admission 2026</h1>
+    <p>Applications are now open for all undergraduate programs. Join College of Engineering Kottarakkara for the academic year 2026–27.</p>
+  </div>
+</section>
+
+<section style="padding:0;border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div class="img-placeholder" style="min-height:280px;border-radius:0;border-left:none;border-right:none">
+      <span class="icon">🎓</span>
+      <span class="hint">Campus — Welcome to CEK</span>
+      <span class="sub-hint">Add a welcoming campus photo for prospective students</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container" style="text-align:center;margin-bottom:48px">
+    <div style="display:inline-flex;gap:16px;flex-wrap:wrap;justify-content:center">
+      <a href="#" class="btn btn-primary">Apply for Admission 2026 →</a>
+      <a href="#" class="btn btn-outline">NRI Admission 2026 →</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <p class="section-label">Process</p>
+    <h2 class="section-title">How to Apply</h2>
+    <p class="section-sub" style="margin-bottom:36px">Admission is through the Centralised Allotment Process (CAP) conducted by the Commissioner for Entrance Examinations (CEE), Kerala.</p>
+    <div class="step-grid">
+      <div class="step-card">
+        <div class="num">01</div>
+        <h4>Check Eligibility</h4>
+        <p>Minimum 50% marks in Mathematics and 50% in Physics, Chemistry & Mathematics combined in qualifying examination. Reservations as per Government norms.</p>
+      </div>
+      <div class="step-card">
+        <div class="num">02</div>
+        <h4>Apply to CEE Kerala</h4>
+        <p>Register for the centralised admission process through the Commissioner for Entrance Examinations (CEE), Kerala website. Submit required documents.</p>
+      </div>
+      <div class="step-card">
+        <div class="num">03</div>
+        <h4>Participate in CAP</h4>
+        <p>Based on merit rank, participate in the Centralised Allotment Process. Select CEK as your preferred institution. Confirm admission by paying the fee.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <p class="section-label">Fee & Scholarships</p>
+    <h2 class="section-title">Fee Structure & Waivers</h2>
+    <p class="section-sub" style="margin-bottom:36px">Affordable education with government-regulated fee structure and AICTE tuition fee waiver scheme for eligible students.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div class="info-card">
+        <h3>Fee Structure (Annual)</h3>
+        <ul>
+          <li>State Merit: ₹35,000 tuition fee</li>
+          <li>Management Quota: ₹65,000 tuition fee</li>
+          <li>NRI Quota: ₹1,00,000 tuition fee</li>
+          <li>Admission Fee: ₹500 (one time)</li>
+          <li>Caution Deposit: ₹5,000 (refundable)</li>
+          <li>University Fees: ₹6,500 (approx.)</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>AICTE Tuition Fee Waiver</h3>
+        <p>Eligible students can avail the AICTE Tuition Fee Waiver Scheme. The college offers:</p>
+        <ul>
+          <li>10% supernumerary seats under fee waiver</li>
+          <li>Covered under AICTE norms</li>
+          <li>Merit-based selection within each category</li>
+          <li>Previous waivers awarded to eligible candidates</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <p class="section-label">Seat Distribution</p>
+    <h2 class="section-title">Program Intake & Quotas</h2>
+    <p class="section-sub" style="margin-bottom:36px">100% merit quota (State Merit) with reservations as per Government of Kerala norms. All seats filled from the rank list prepared by CEE Kerala.</p>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px">
+      <div class="info-card">
+        <h3>CSE (120 Seats)</h3>
+        <p>B.Tech Computer Science & Engineering — full-time, 4-year program. NRI quota available.</p>
+        <p style="margin-top:12px"><strong>AICTE EoA 2026–27:</strong> Approved intake of 120 seats.</p>
+      </div>
+      <div class="info-card">
+        <h3>CSE AI & ML (60 Seats)</h3>
+        <p>B.Tech CSE with specialisation in Artificial Intelligence & Machine Learning. NRI quota available.</p>
+        <p style="margin-top:12px"><strong>AICTE EoA 2026–27:</strong> Approved intake of 60 seats.</p>
+      </div>
+      <div class="info-card">
+        <h3>BCA (60 Seats)</h3>
+        <p>Bachelor of Computer Application — 4-year program affiliated to KTU. NRI quota not available.</p>
+        <p style="margin-top:12px"><strong>AICTE EoA 2026–27:</strong> Approved intake of 60 seats.</p>
+      </div>
+      <div class="info-card">
+        <h3>BBA (60 Seats)</h3>
+        <p>Bachelor of Business Administration — 4-year program affiliated to KTU. NRI quota not available.</p>
+        <p style="margin-top:12px"><strong>AICTE EoA 2026–27:</strong> Approved intake of 60 seats.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <p class="section-label">Notices</p>
+    <h2 class="section-title">Fee & Important Dates</h2>
+    <p class="section-sub" style="margin-bottom:36px">Fee remittance schedule for the academic year 2026–27.</p>
+    <div class="info-card">
+      <h3>Fee Remittance — Odd Semester 2026–27</h3>
+      <ul>
+        <li><strong>Commencement of classes:</strong> 01 July 2026</li>
+        <li><strong>Fee remittance starts:</strong> 15 June 2026</li>
+        <li><strong>Fee remittance without fine:</strong> 07 July 2026</li>
+        <li>Applicable for B.Tech S3, S5, S7 and BCA S3, S5</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <p class="section-label">Downloads</p>
+    <h2 class="section-title">Important Documents</h2>
+    <p class="section-sub" style="margin-bottom:36px">Official documents for reference and download.</p>
+    <div class="doc-grid">
+      <a href="#" class="doc-link">
+        <span class="icon">📄</span>
+        <div><div class="name">AICTE Extension of Approval 2026–27</div><div class="hint">PDF · Official</div></div>
+      </a>
+      <a href="#" class="doc-link">
+        <span class="icon">📄</span>
+        <div><div class="name">Extension of Affiliation — KTU</div><div class="hint">PDF · Official</div></div>
+      </a>
+      <a href="#" class="doc-link">
+        <span class="icon">📄</span>
+        <div><div class="name">Mandatory Disclosure</div><div class="hint">PDF · Updated Dec 2024</div></div>
+      </a>
+      <a href="#" class="doc-link">
+        <span class="icon">📄</span>
+        <div><div class="name">Fee Notice 2026–27</div><div class="hint">PDF · 01 June 2026</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="cta-banner">
+      <h2>Ready to Join CEK?</h2>
+      <p>Take the first step toward a rewarding career. Apply for admission 2026 and become part of a legacy of engineering excellence.</p>
+      <a href="#" class="btn btn-primary">Apply Now →</a>
+    </div>
+  </div>
+</section>
+
+<div class="footer-wave">
+  <svg viewBox="0 0 1440 72" preserveAspectRatio="none">
+    <path d="M0,36 C150,10 300,55 460,30 C620,5 780,50 940,28 C1100,6 1280,45 1440,22 L1440,72 L0,72 Z" fill="var(--accent)"/>
+    <path d="M0,52 C220,30 440,68 660,45 C880,22 1100,60 1320,40 C1380,35 1420,48 1440,42 L1440,72 L0,72 Z" fill="var(--accent-dark)" opacity="0.5"/>
+    <path d="M0,66 C300,50 600,78 900,58 C1100,46 1300,72 1440,60 L1440,72 L0,72 Z" fill="var(--accent)" opacity="0.35"/>
+  </svg>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="col">
+      <h4>College of Engineering Kottarakkara</h4>
+      <p>Thrikkannamangal, ETC P.O</p>
+      <p>Kottarakkara, Kollam</p>
+      <p>Kerala — 691531</p>
+      <p style="margin-top:12px">📞 0474-2453300, 8547005039</p>
+      <p>✉️ principal@cekottarakkara.ac.in</p>
+    </div>
+    <div class="col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="admissions.html">Admissions</a></li>
+        <li><a href="placements.html">Placements</a></li>
+        <li><a href="student-life.html">Student Life</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#">Fee Payment (SBCollect)</a></li>
+        <li><a href="#">IHRD</a></li>
+        <li><a href="#">KTU</a></li>
+        <li><a href="#">AICTE</a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <h4>Downloads</h4>
+      <ul>
+        <li><a href="#">AICTE EoA 2026–27</a></li>
+        <li><a href="#">KTU Affiliation</a></li>
+        <li><a href="#">Mandatory Disclosure</a></li>
+        <li><a href="#">Fee Notice 2026–27</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 College of Engineering Kottarakkara</span>
+      <span>Managed by IHRD, Government of Kerala</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if (toggle && links) {
+      toggle.addEventListener('click', function() { links.classList.toggle('open'); });
+      document.addEventListener('click', function(e) {
+        if (!toggle.contains(e.target) && !links.contains(e.target)) links.classList.remove('open');
+      });
+    }
+  })();
+</script>
+</body>
+</html>
